@@ -15,6 +15,8 @@ public class Code_2048 {
     private JLabel scoreLabel;
     private JLabel highScoreLabel;
     private boolean winConditionReached;
+
+    // Constructor
     public Code_2048() {
         grid = new int[SIZE][SIZE];
         random = new Random();
@@ -26,6 +28,8 @@ public class Code_2048 {
         frame.setLayout(new BorderLayout());
         gridPanel = new JPanel(new GridLayout(SIZE, SIZE));
         gridLabels = new JLabel[SIZE][SIZE];
+
+        // Initialize grid labels
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 gridLabels[i][j] = new JLabel("", JLabel.CENTER);
@@ -36,6 +40,7 @@ public class Code_2048 {
             }
         }
 
+        // Set up frame layout
         frame.add(gridPanel, BorderLayout.CENTER);
         JPanel infoPanel = new JPanel(new GridLayout(2, 2));
         scoreLabel = new JLabel("Score: 0", JLabel.CENTER);
@@ -43,8 +48,9 @@ public class Code_2048 {
         infoPanel.add(scoreLabel);
         infoPanel.add(highScoreLabel);
         frame.add(infoPanel, BorderLayout.NORTH);
+
+        // Add key listener for arrow keys
         frame.addKeyListener(new KeyAdapter() {
-    
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_UP) {
@@ -64,25 +70,27 @@ public class Code_2048 {
             }
         });
 
+        // Set focus on frame
         frame.setFocusable(true);
         frame.requestFocus();
         frame.setVisible(true);
         initializeGrid();
         updateGridLabels();
     }
-    public void initializeGrid() {
 
+    // Initialize grid with two random numbers
+    public void initializeGrid() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 grid[i][j] = 0;
             }
         }
-
         addNewNumber();
         addNewNumber();
     }
-    public void addNewNumber() {
 
+    // Add a new random number (2 or 4) to an empty cell
+    public void addNewNumber() {
         int row, col;
         do {
             row = random.nextInt(SIZE);
@@ -91,6 +99,8 @@ public class Code_2048 {
 
         grid[row][col] = (random.nextInt(2) + 1) * 2;
     }
+
+    // Update the display of the grid labels based on the grid values
     public void updateGridLabels() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -105,11 +115,12 @@ public class Code_2048 {
                     gridLabels[i][j].setText(String.valueOf(grid[i][j]));
                     gridLabels[i][j].setBackground(getTileColor(grid[i][j]));
                 }
-
                 gridLabels[i][j].setBorder(BorderFactory.createLineBorder(Color.gray, 5));
             }
         }
     }
+
+    // Get color based on tile value
     public Color getTileColor(int value) {
         switch (value) {
             case 2:
@@ -138,6 +149,8 @@ public class Code_2048 {
                 return Color.WHITE;
         }
     }
+
+    // Move tiles upwards
     public void moveUp() {
         int prevScore = score;
         boolean moved = false;
@@ -168,6 +181,8 @@ public class Code_2048 {
             updateScore();
         }
     }
+
+    // Move tiles downwards
     public void moveDown() {
         int prevScore = score;
         boolean moved = false;
@@ -198,6 +213,8 @@ public class Code_2048 {
             updateScore();
         }
     }
+
+    // Move tiles to the left
     public void moveLeft() {
         int prevScore = score;
         boolean moved = false;
@@ -228,6 +245,8 @@ public class Code_2048 {
             updateScore();
         }
     }
+
+    // Move tiles to the right
     public void moveRight() {
         int prevScore = score;
         boolean moved = false;
@@ -258,8 +277,10 @@ public class Code_2048 {
             updateScore();
         }
     }
+
+    // Check if the game is over
     public boolean isGameOver() {
-        if(winConditionReached){
+        if (winConditionReached) {
             return true;
         }
         for (int i = 0; i < SIZE; i++) {
@@ -275,6 +296,8 @@ public class Code_2048 {
         }
         return true;
     }
+
+    // Show game over message dialog
     public void showGameOverMessage() {
         String message;
         if (winConditionReached) {
@@ -289,13 +312,17 @@ public class Code_2048 {
             System.exit(0);
         }
     }
+
+    // Restart the game
     public void restartGame() {
         score = 0;
-        winConditionReached=false;
+        winConditionReached = false;
         updateScore();
         initializeGrid();
         updateGridLabels();
     }
+
+    // Update the score labels
     public void updateScore() {
         scoreLabel.setText("Score: " + score);
         if (score > highScore) {
@@ -303,6 +330,8 @@ public class Code_2048 {
             highScoreLabel.setText("High Score: " + highScore);
         }
     }
+
+    // Main method to start the game
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
