@@ -22,7 +22,7 @@ public class Code_2048 {
         random = new Random();
         score = 0;
         highScore = 0;
-        frame = new JFrame("Malvika's 2048");
+        frame = new JFrame("Jay's 2048");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 450);
         frame.setLayout(new BorderLayout());
